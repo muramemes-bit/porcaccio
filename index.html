@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaggio Importante</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            overflow: hidden;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 80px;
+            color: #fff;
+            text-shadow: 
+                0 0 10px #fff,
+                0 0 20px #fff,
+                0 0 30px #fff,
+                0 0 40px #ff00de,
+                0 0 70px #ff00de,
+                0 0 80px #ff00de,
+                0 0 100px #ff00de,
+                0 0 150px #ff00de;
+            animation: pulse 1.5s ease-in-out infinite, shake 0.5s ease-in-out infinite, rainbow 2s linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            75% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .emoji {
+            font-size: 100px;
+            display: inline-block;
+            animation: spin 2s linear infinite, bounce 1s ease-in-out infinite;
+            margin: 20px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        h2.hacker-text {
+            font-size: 50px;
+            color: #00ff00;
+            text-shadow: 
+                0 0 10px #00ff00,
+                0 0 20px #00ff00,
+                0 0 30px #00ff00,
+                0 0 40px #00ff00;
+            animation: glitch 1s ease-in-out infinite, flicker 0.3s ease-in-out infinite;
+            margin-top: 30px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 5px;
+        }
+
+        @keyframes glitch {
+            0%, 100% { 
+                transform: translate(0);
+                text-shadow: 
+                    0 0 10px #00ff00,
+                    0 0 20px #00ff00,
+                    0 0 30px #00ff00,
+                    0 0 40px #00ff00;
+            }
+            25% { 
+                transform: translate(-5px, 5px);
+                text-shadow: 
+                    -5px 5px 10px #ff0000,
+                    0 0 20px #00ff00,
+                    5px -5px 30px #0000ff;
+            }
+            50% { 
+                transform: translate(5px, -5px);
+                text-shadow: 
+                    5px -5px 10px #0000ff,
+                    0 0 20px #00ff00,
+                    -5px 5px 30px #ff0000;
+            }
+            75% { 
+                transform: translate(-5px, -5px);
+                text-shadow: 
+                    -5px -5px 10px #ff0000,
+                    0 0 20px #00ff00,
+                    5px 5px 30px #0000ff;
+            }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .emoji.skull {
+            animation: spin 2s linear infinite, pulse 0.5s ease-in-out infinite;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="emoji">😂</div>
+        <h1>SEI UN COGLIONE</h1>
+        <div class="emoji">🤣</div>
+        <h2 class="hacker-text">TI ABBIAMO HACKERATO</h2>
+        <div class="emoji skull">💀</div>
+    </div>
+
+    <!-- Audio nascosto -->
+    <audio id="trollAudio" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Avvia l'audio quando l'utente interagisce con la pagina
+        const audio = document.getElementById('trollAudio');
+        
+        // Prova ad avviare subito (funziona su alcuni browser)
+        audio.play().catch(() => {
+            // Se fallisce, aspetta il primo click/touch
+            document.body.addEventListener('click', () => {
+                audio.play();
+            }, { once: true });
+            
+            document.body.addEventListener('touchstart', () => {
+                audio.play();
+            }, { once: true });
+        });
+        
+        // Crea particelle animate
+        const particlesContainer = document.getElementById('particles');
+        const emojis = ['😂', '🤣', '😆', '💩', '🎉', '⭐', '💫', '💀', '☠️', '🔥', '⚠️', '🚨'];
+        
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            particlesContainer.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+
+        // Crea particelle continuamente
+        setInterval(createParticle, 300);
+    </script>
+</body>
+</html>
